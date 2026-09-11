@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://nazircamara.github.io/Sheikh-Soxona/sitemap.xml

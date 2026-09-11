@@ -5,7 +5,7 @@ const audioEnhancer = () => {
     const listItem = audio.closest('li');
     const labelCandidate = listItem?.previousElementSibling?.matches('label')
       ? listItem.previousElementSibling.textContent.trim()
-      : listItem?.querySelector('[data-audio-title]')?.textContent?.trim();
+      : listItem?.querySelector('.audio-title, [data-audio-title]')?.textContent?.trim();
     const label = labelCandidate || '';
     const source = audio.getAttribute('src') || '';
     const disabled = !source || source === '#';
@@ -35,6 +35,7 @@ const audioEnhancer = () => {
     audio.classList.add('audio-player__native');
     audio.dataset.enhanced = 'true';
     audio.setAttribute('preload', 'metadata');
+    audio.setAttribute('aria-label', label || 'درس صوتي');
 
     const toggle = player.querySelector('.audio-player__toggle');
     const progress = player.querySelector('.audio-player__progress');
