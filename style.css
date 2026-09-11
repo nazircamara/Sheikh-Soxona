@@ -2913,21 +2913,25 @@ body.is-drawer-open .offcanvas-menu,
 
 @media (max-width: 768px) {
     .home-hero {
-        min-height: 320px;
-        padding: 1rem 0 5rem;
-        background-image: linear-gradient(180deg, rgba(8, 28, 21, 0.3) 0%, rgba(8, 28, 21, 0.75) 100%), url('image/backimage.png') !important;
+        min-height: 280px;
+        padding: 1rem 0 3.5rem;
+        background-image:
+            linear-gradient(180deg, rgba(8, 28, 21, 0.25) 0%, rgba(8, 28, 21, 0.7) 100%),
+            url('image/backimage.png') !important;
         background-size: cover !important;
         background-position: center center !important;
-        border-bottom-left-radius: 30% 7%;
-        border-bottom-right-radius: 30% 7%;
+        background-repeat: no-repeat !important;
+        border-bottom-left-radius: 35% 8%;
+        border-bottom-right-radius: 35% 8%;
     }
 
     .home-hero__content {
         min-height: auto;
         width: 100%;
-        padding: 5rem clamp(1rem, 6vw, 2rem) 2rem;
+        padding: 2rem 1rem;
     }
 
+    /* Hide the plain text overlay so only the banner image title shows */
     .home-hero__mobile-copy {
         display: none !important;
     }
