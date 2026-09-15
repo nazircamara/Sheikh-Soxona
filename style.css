@@ -997,6 +997,19 @@ select {
     opacity: 0.75;
 }
 
+.audio-player.is-error {
+    border: 1px solid rgba(176, 42, 55, 0.35);
+    background: #fff5f5;
+}
+
+.audio-player__error {
+    grid-column: 1 / -1;
+    margin: 0;
+    color: #a61e2b;
+    font-size: 0.9rem;
+    font-weight: 700;
+}
+
 .portal-footer {
     margin-top: 2rem;
     background: linear-gradient(180deg, var(--header-bg-2), var(--header-bg));

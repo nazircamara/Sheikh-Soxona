@@ -10,6 +10,11 @@ const audioEnhancer = () => {
     const source = audio.getAttribute('src') || '';
     const disabled = !source || source === '#';
 
+    if (!disabled) {
+      const canonicalSource = new URL(source, document.baseURI).href;
+      audio.setAttribute('src', canonicalSource);
+    }
+
     const player = document.createElement('article');
     player.className = 'audio-player';
     player.innerHTML = `
@@ -30,6 +35,7 @@ const audioEnhancer = () => {
             <span data-duration>00:00</span>
           </div>
         </div>
+        <p class="audio-player__error" role="alert" hidden>تعذر تحميل هذا المقطع الصوتي.</p>
     `;
 
     audio.classList.add('audio-player__native');
@@ -41,6 +47,7 @@ const audioEnhancer = () => {
     const progress = player.querySelector('.audio-player__progress');
     const currentTime = player.querySelector('[data-current]');
     const durationTime = player.querySelector('[data-duration]');
+    const errorMessage = player.querySelector('.audio-player__error');
 
     const formatTime = (seconds) => {
       if (!Number.isFinite(seconds)) return '00:00';
@@ -69,7 +76,12 @@ const audioEnhancer = () => {
         document.querySelectorAll('audio[data-enhanced="true"]').forEach((otherAudio) => {
           if (otherAudio !== audio) otherAudio.pause();
         });
-        audio.play();
+        audio.play().catch((error) => {
+          console.error('[audio] Playback failed:', audio.currentSrc || audio.src, error);
+          player.classList.add('is-error');
+          errorMessage.hidden = false;
+          toggle.disabled = true;
+        });
       } else {
         audio.pause();
       }
@@ -81,6 +93,14 @@ const audioEnhancer = () => {
     });
 
     audio.addEventListener('loadedmetadata', syncProgress);
+    audio.addEventListener('error', () => {
+      const failedUrl = audio.currentSrc || audio.src || source;
+      console.error('[audio] Failed to load:', failedUrl, audio.error);
+      player.classList.add('is-error');
+      errorMessage.hidden = false;
+      toggle.disabled = true;
+      progress.disabled = true;
+    });
     audio.addEventListener('timeupdate', syncProgress);
     audio.addEventListener('play', setPlayingState);
     audio.addEventListener('pause', setPlayingState);
